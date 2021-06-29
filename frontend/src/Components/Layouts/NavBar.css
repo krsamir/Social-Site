@@ -1,0 +1,21 @@
+.navbar {
+  background-color: #ebebeb;
+  height: 60px;
+  position: sticky;
+  z-index: 100;
+}
+
+.searchBox {
+  width: 100% !important;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding-left: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .section1,
+  .section3 {
+    display: none;
+  }
+}
