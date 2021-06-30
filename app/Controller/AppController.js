@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import AppModel from "../Model/AppModel.js";
 
 const Task = {};

@@ -1,13 +1,22 @@
 // eslint-disable-next-line
 import SQL from "../Database/Database.js";
-
+import Mail from "../Mail/Mails.js";
 const Task = {};
-Task.test = (data, result) => {
-  SQL.query("SELECT 1 + 1 AS solution", function (error, results, fields) {
-    if (error) {
-      result(error, null);
+Task.register = async (data, result) => {
+  const { firstName, lastName, email, password, token, expireat } = data;
+  let query = `INSERT INTO register (firstname, lastname, email, password,token, expireat) 
+  VALUES ('${firstName}','${lastName}', '${email}', '${password}', '${token}', '${expireat}');`;
+  await SQL.query(query, async (err, res) => {
+    if (err) {
+      if (err.code === "ER_DUP_ENTRY") {
+        result(null, { status: "existing" });
+        await Mail.registerUser();
+      } else {
+        console.log(err);
+        result(err, null);
+      }
     } else {
-      result(null, `Database connection has been established.`);
+      result(null, { status: "created" });
     }
   });
 };

@@ -11,7 +11,6 @@ import {
   Avatar,
   Button,
   TextField,
-  Link,
   Grid,
   Box,
   Typography,
@@ -20,6 +19,10 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
+import { v4 as uuidv4 } from "uuid";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,16 +53,57 @@ function Copyright() {
     </Typography>
   );
 }
-const Register = () => {
+const Register = (props) => {
   const classes = useStyles();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = () => {
-    console.log(firstName, lastName, email, password);
+  const handleSubmit = async () => {
+    if (
+      firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      password !== ""
+    ) {
+      if (password.length < 8) {
+        props.ErrorToast("Password cannot be less than 8 characters");
+      } else {
+        const token = uuidv4();
+        const expireat = moment().add(1, "hours").format("YYYY-MM-DD HH:mm:ss");
+        await axios
+          .post("/api/register", {
+            firstName,
+            lastName,
+            email,
+            password,
+            token,
+            expireat,
+          })
+          .then((res) => {
+            if (res.data.status === "existing") {
+              props.warningToast("You are already Registered with us.");
+            } else if (res.data.status === "created") {
+              props.successToast("Kindly Check Your Mail!");
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+        // initialize();
+      }
+    } else {
+      props.ErrorToast(
+        "All fields are mandatory. Please fill all the details."
+      );
+    }
   };
+  // const initialize = () => {
+  //   setEmail("");
+  //   setFirstName("");
+  //   setLastName("");
+  //   setPassword("");
+  // };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -85,6 +129,7 @@ const Register = () => {
                 onChange={(e) => {
                   setFirstName(e.target.value);
                 }}
+                value={firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -99,6 +144,7 @@ const Register = () => {
                 onChange={(e) => {
                   setLastName(e.target.value);
                 }}
+                value={lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -113,6 +159,7 @@ const Register = () => {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                value={email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -128,6 +175,7 @@ const Register = () => {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
+                value={password}
               />
             </Grid>
           </Grid>
@@ -143,7 +191,7 @@ const Register = () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link to="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

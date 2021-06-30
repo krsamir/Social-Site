@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Avatar,
   Button,
   TextField,
   FormControlLabel,
   Checkbox,
-  Link,
   Grid,
   Box,
   Typography,
@@ -22,6 +21,8 @@ import {
   warningToast,
   ErrorToast,
 } from "../../Redux/Actions/ToastAction";
+import { Link } from "react-router-dom";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -105,7 +106,7 @@ function Login() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/register" variant="body2">
+              <Link to="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
