@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
-
+import { Modal, Button as Buttons } from "react-bootstrap";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -54,11 +54,34 @@ function Copyright() {
   );
 }
 const Register = (props) => {
+  const [show, setShow] = useState(false);
+
   const classes = useStyles();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const resend = () => {
+    const token = uuidv4();
+    const expireat = moment().add(1, "hours").format("YYYY-MM-DD HH:mm:ss");
+    const data = { email, token, expireat, firstName };
+    axios
+      .post("/api/resend", data)
+      .then((res) => {
+        if (res.data.status === "created") {
+          props.successToast("Kindly Check Your Mail!");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    handleClose();
+  };
+
   const handleSubmit = async () => {
     if (
       firstName !== "" &&
@@ -82,9 +105,21 @@ const Register = (props) => {
           })
           .then((res) => {
             if (res.data.status === "existing") {
+              // Ideally this should not be executed
               props.warningToast("You are already Registered with us.");
             } else if (res.data.status === "created") {
               props.successToast("Kindly Check Your Mail!");
+            } else if (res.data.status === "failed") {
+              props.ErrorToast(
+                "Registration failed due to some reason. Please try again"
+              );
+            } else if (res.data.status === "changepassword") {
+              props.warningToast(
+                "You are already Registered with us. Try changing your password"
+              );
+            } else if (res.data.status === "resend") {
+              handleShow();
+              // props.ErrorToast("Resend");
             }
           })
           .catch((e) => {
@@ -98,12 +133,13 @@ const Register = (props) => {
       );
     }
   };
-  // const initialize = () => {
-  //   setEmail("");
-  //   setFirstName("");
-  //   setLastName("");
-  //   setPassword("");
-  // };
+  // eslint-disable-next-line
+  const initialize = () => {
+    setEmail("");
+    setFirstName("");
+    setLastName("");
+    setPassword("");
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -202,6 +238,32 @@ const Register = (props) => {
         <Copyright />
       </Box>
       <ToastContainer />
+      <Modal
+        show={show}
+        onHide={handleClose}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Register</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <span>You are already registered with us.</span>
+          <br />
+          <span>
+            Do you want to recieve a verification link at
+            <strong> {email}</strong>{" "}
+          </span>
+        </Modal.Body>
+        <Modal.Footer>
+          <Buttons variant="secondary" onClick={handleClose}>
+            Close
+          </Buttons>
+          <Buttons variant="success" onClick={resend}>
+            Send
+          </Buttons>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

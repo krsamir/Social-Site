@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import mysql from "mysql";
 
 import { config } from "dotenv";

@@ -12,4 +12,14 @@ Task.register = (req, res) => {
   });
 };
 
+Task.resend = (req, res) => {
+  LoginModel.resend(req.body, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
+
 export default Task;
