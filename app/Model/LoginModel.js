@@ -1,4 +1,5 @@
 // eslint-disable-next-line
+import moment from "moment";
 import SQL from "../Database/Database.js";
 import Mail from "../Mail/Mails.js";
 const Task = {};
@@ -113,4 +114,80 @@ Task.resend = (data, result) => {
   );
 };
 
+Task.validateToken = (data, result) => {
+  const { token } = data;
+  const searchToken = `select expireat, status from register where token="${token}" and status= 0`;
+  const Validated = `update register set token = NULL, expireat = NULL, status = '1' where (token = '3')`;
+  SQL.query(searchToken, (err, res) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      if (res.length > 0) {
+        const response = JSON.parse(JSON.stringify(res))[0];
+        const expiryTime = moment(response.expireat);
+        const now = moment();
+        if (expiryTime.isBefore(now)) {
+          result(null, { status: "UNVERIFIED" });
+        } else {
+          SQL.query(Validated, (err, response1) => {
+            if (err) {
+              result(err, null);
+            } else {
+              result(null, { status: "VERIFIED" });
+            }
+          });
+        }
+      } else {
+        result(null, { status: "ERROR" });
+      }
+    }
+  });
+};
+
+Task.reverify = (data, result) => {
+  const { email, token, expireat } = data;
+  const findUser = `select * from register where email = "${email}"`;
+  const updateQuery = `update register set token = '${token}',  expireat = '${expireat}', status = 0 WHERE (email = '${email}')`;
+  SQL.query(findUser, (err, res) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      if (res.length > 0) {
+        const response = JSON.parse(JSON.stringify(res))[0];
+        const { firstname, status } = response;
+        if (status === 0) {
+          Mail.registerUser(
+            email,
+            firstname,
+            token,
+            expireat.split(" ")[1],
+            async (res) => {
+              if (res === "mailsent") {
+                SQL.query(updateQuery, (err, res) => {
+                  if (err) {
+                    console.log(err);
+                    result(err, null);
+                  } else {
+                    result(null, { status: "created" });
+                  }
+                });
+              } else if (res === "mailnotsent") {
+                log(`Mail Failed for ${email}`);
+                // run database query to delete token and expirydate
+                await onEmailFailure(email);
+                result(null, { status: "failed" });
+              }
+            }
+          );
+        } else if (status === 1) {
+          result(null, { status: "alreadyverified" });
+        }
+      } else {
+        result(null, { status: "doesnotexist" });
+      }
+    }
+  });
+};
 export default Task;

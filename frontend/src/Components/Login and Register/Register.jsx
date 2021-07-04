@@ -47,7 +47,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Samir ©"}
-      {/* <Link color="inherit" href="https://material-ui.com/">
+      {/* <Link color="inherit" to="https://material-ui.com/">
         Your Website
       </Link>{" "} */}
     </Typography>
@@ -75,6 +75,7 @@ const Register = (props) => {
         if (res.data.status === "created") {
           props.successToast("Kindly Check Your Mail!");
         }
+        initialize();
       })
       .catch((error) => {
         console.log(error);
@@ -108,6 +109,7 @@ const Register = (props) => {
               // Ideally this should not be executed
               props.warningToast("You are already Registered with us.");
             } else if (res.data.status === "created") {
+              initialize();
               props.successToast("Kindly Check Your Mail!");
             } else if (res.data.status === "failed") {
               props.ErrorToast(
@@ -125,7 +127,6 @@ const Register = (props) => {
           .catch((e) => {
             console.log(e);
           });
-        // initialize();
       }
     } else {
       props.ErrorToast(
@@ -227,9 +228,7 @@ const Register = (props) => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <Link to="/login">Already have an account? Sign in</Link>
             </Grid>
           </Grid>
         </form>

@@ -22,4 +22,24 @@ Task.resend = (req, res) => {
   });
 };
 
+Task.validateToken = (req, res) => {
+  LoginModel.validateToken(req.params, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
+
+Task.reverify = (req, res) => {
+  LoginModel.reverify(req.body, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
+
 export default Task;

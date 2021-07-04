@@ -28,17 +28,17 @@ Task.registerUser = (
   };
   // console.log("mailnotsent");
   // callback("mailnotsent");
-  console.log("mailsent");
-  callback("mailsent");
-  // transporter.sendMail(mailOptions, function (error, info) {
-  //   if (error) {
-  //     console.log(error);
-  //     callback("mailnotsent");
-  //   } else {
-  //     console.log("Email sent: " + info.response);
-  //     callback("mailsent");
-  //   }
-  // });
+  // console.log("mailsent");
+  // callback("mailsent");
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+      callback("mailnotsent");
+    } else {
+      console.log("Email sent: " + info.response);
+      callback("mailsent");
+    }
+  });
 };
 
 export default Task;
