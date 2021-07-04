@@ -117,7 +117,7 @@ Task.resend = (data, result) => {
 Task.validateToken = (data, result) => {
   const { token } = data;
   const searchToken = `select expireat, status from register where token="${token}" and status= 0`;
-  const Validated = `update register set token = NULL, expireat = NULL, status = '1' where (token = '3')`;
+  const Validated = `update register set token = NULL, expireat = NULL, status = 1 where (token = '${token}')`;
   SQL.query(searchToken, (err, res) => {
     if (err) {
       console.log(err);
