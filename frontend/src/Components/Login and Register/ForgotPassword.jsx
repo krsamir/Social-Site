@@ -1,4 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { connect } from "react-redux";
+import {
+  successToast,
+  warningToast,
+  ErrorToast,
+} from "../../Redux/Actions/ToastAction";
 import {
   Avatar,
   Button,
@@ -13,16 +22,7 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-import { connect } from "react-redux";
-import {
-  successToast,
-  warningToast,
-  ErrorToast,
-} from "../../Redux/Actions/ToastAction";
-import { Link } from "react-router-dom";
-import axios from "axios";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -51,40 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login(props) {
-  const [data, setData] = useState({ email: "", password: "" });
-
-  const handleChange = (target) => {
-    const values = { ...data };
-    values[target.name] = target.value;
-    setData(values);
-  };
-
-  const handleLogin = () => {
-    axios
-      .post("/api/login", data)
-      .then((res) => {
-        if (res.data.status === "usernotfound") {
-          props.ErrorToast("Please register with us first!");
-        } else if (res.data.status === "invaliduser") {
-          props.warningToast("Wrong Credentials!");
-        } else {
-          const { token } = res.data;
-          if (token !== undefined && token !== "") {
-            window.localStorage.clear();
-            window.localStorage.setItem("sid", token);
-            props.history.push("/");
-          } else {
-            props.history.push("/login");
-          }
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    // setData({ email: "", password: "" });
-  };
-
+function ForgotPassword() {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -94,7 +61,7 @@ function Login(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Change Password
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -107,8 +74,6 @@ function Login(props) {
             name="email"
             autoComplete="email"
             autoFocus
-            value={data.email}
-            onChange={(e) => handleChange(e.target)}
           />
           <TextField
             variant="outlined"
@@ -120,20 +85,13 @@ function Login(props) {
             type="password"
             id="password"
             autoComplete="current-password"
-            value={data.password}
-            onChange={(e) => handleChange(e.target)}
           />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleLogin}
           >
             Sign In
           </Button>
@@ -158,8 +116,9 @@ function Login(props) {
     </Container>
   );
 }
+
 export default connect(null, {
   successToast,
   warningToast,
   ErrorToast,
-})(Login);
+})(ForgotPassword);

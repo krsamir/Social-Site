@@ -2,8 +2,11 @@
 import moment from "moment";
 import SQL from "../Database/Database.js";
 import Mail from "../Mail/Mails.js";
+import jwt from "jsonwebtoken";
+import { config } from "dotenv";
 const Task = {};
 const log = console.log;
+config();
 Task.register = async (data, result) => {
   const { firstName, lastName, email, password, token, expireat } = data;
   const checkExistingUser = `SELECT * FROM register where email="${email}"`;
@@ -186,6 +189,34 @@ Task.reverify = (data, result) => {
         }
       } else {
         result(null, { status: "doesnotexist" });
+      }
+    }
+  });
+};
+const { JWT_SECRET, JWT_EXPIRATION_TIME } = process.env;
+Task.login = (data, result) => {
+  const { email, password } = data;
+  let query = `SELECT * FROM register where email="${email}"`;
+  SQL.query(query, async (err, res) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      if (res.length === 0) {
+        result(null, { status: "usernotfound" });
+      } else {
+        const response = JSON.parse(JSON.stringify(res))[0];
+        // const isMatched = await bcrypt.compare(password, response.password);
+        const isMatched = password === response.password;
+        if (isMatched) {
+          const token = jwt.sign({ id: email, role: "owner" }, JWT_SECRET, {
+            expiresIn: JWT_EXPIRATION_TIME,
+            // expiresIn: "7 days",
+          });
+          return result(null, { token });
+        } else {
+          result(null, { status: "invaliduser" });
+        }
       }
     }
   });

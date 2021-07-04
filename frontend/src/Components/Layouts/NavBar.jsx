@@ -1,5 +1,6 @@
 import React from "react";
 import "./NavBar.css";
+import { Button } from "react-bootstrap";
 const NavBarComponent = () => {
   return (
     <div>
@@ -12,7 +13,17 @@ const NavBarComponent = () => {
             <input type="text" className="searchBox" />
           </div>
         </div>
-        <div className="col section3"></div>
+        <div className="col section3">
+          <Button
+            variant="dark"
+            onClick={() => {
+              window.localStorage.clear();
+              window.location.reload();
+            }}
+          >
+            Logout
+          </Button>
+        </div>
       </div>
     </div>
   );

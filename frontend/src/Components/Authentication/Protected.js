@@ -1,16 +1,16 @@
 import React from "react";
-import Cookies from "universal-cookie";
 import { Route, Redirect } from "react-router-dom";
-// import { role } from "../Redux/Actions/GlobalAction";
-import { connect } from "react-redux";
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const cookies = new Cookies();
   return (
     <div>
       <Route
         {...rest}
         render={(props) => {
-          if (cookies.get("sid") !== undefined && cookies.get("sid") !== "") {
+          if (
+            window.localStorage.getItem("sid") !== undefined &&
+            window.localStorage.getItem("sid") !== "" &&
+            window.localStorage.getItem("sid") !== null
+          ) {
             return <Component {...props} />;
           } else {
             return (
@@ -30,4 +30,4 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default connect(null, null)(ProtectedRoute);
+export default ProtectedRoute;
