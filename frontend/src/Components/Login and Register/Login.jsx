@@ -52,7 +52,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login(props) {
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setData] = useState({
+    email: "samirkr2527@gmail.com",
+    password: "1234567890",
+  });
 
   const handleChange = (target) => {
     const values = { ...data };

@@ -24,9 +24,20 @@
   border: none;
   margin-bottom: 10px;
   outline: none;
+  padding: 5px;
 }
 
 .post__bottom {
   display: flex;
   justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px) {
+  .t1,
+  .t3 {
+    display: none;
+  }
+  .post {
+    margin: 15px;
+  }
 }

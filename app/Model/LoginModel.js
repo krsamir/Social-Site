@@ -196,7 +196,7 @@ Task.reverify = (data, result) => {
 const { JWT_SECRET, JWT_EXPIRATION_TIME } = process.env;
 Task.login = (data, result) => {
   const { email, password } = data;
-  let query = `SELECT * FROM register where email="${email}"`;
+  let query = `SELECT * FROM register where email="${email}" and status = 1`;
   SQL.query(query, async (err, res) => {
     if (err) {
       console.log(err);
@@ -209,7 +209,7 @@ Task.login = (data, result) => {
         // const isMatched = await bcrypt.compare(password, response.password);
         const isMatched = password === response.password;
         if (isMatched) {
-          const token = jwt.sign({ id: email, role: "owner" }, JWT_SECRET, {
+          const token = jwt.sign({ user: email }, JWT_SECRET, {
             expiresIn: JWT_EXPIRATION_TIME,
             // expiresIn: "7 days",
           });

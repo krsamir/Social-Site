@@ -9,8 +9,18 @@ const NavBarComponent = () => {
           <h3>College</h3>
         </div>
         <div className="col">
-          <div>
+          <div className="nav__center">
             <input type="text" className="searchBox" />
+            <Button
+              className="logout__button"
+              variant="dark"
+              onClick={() => {
+                window.localStorage.clear();
+                window.location.reload();
+              }}
+            >
+              Logout
+            </Button>
           </div>
         </div>
         <div className="col section3">
