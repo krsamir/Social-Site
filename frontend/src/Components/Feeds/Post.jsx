@@ -4,7 +4,7 @@ import "./Post.css";
 import ImageUpload from "./ImageUpload";
 import { UploadImages } from "../../Redux/Actions/FeedAction";
 import { connect } from "react-redux";
-
+import CancelIcon from "@material-ui/icons/Cancel";
 function Post(props) {
   const { images } = props;
   const urls = Array.from(images).map((value) => URL.createObjectURL(value));
@@ -31,20 +31,24 @@ function Post(props) {
         <div className="post__imageBox">
           {urls &&
             urls.map((value, index) => {
-              console.log(value);
               return (
-                <img
-                  src={value}
-                  key={index}
-                  className="post__images"
-                  alt=""
-                  onClick={(e) => {
-                    console.log(
-                      "🚀 ~ file: Post.jsx ~ line 42 ~ urls.map ~ i",
-                      index
-                    );
-                  }}
-                />
+                <div>
+                  <img
+                    src={value}
+                    key={index}
+                    className="post__images image1"
+                    alt=""
+                  />
+                  <CancelIcon
+                    className="image2"
+                    onClick={(e) => {
+                      console.log(
+                        "🚀 ~ file: Post.jsx ~ line 42 ~ urls.map ~ i",
+                        index
+                      );
+                    }}
+                  />
+                </div>
               );
             })}
         </div>
