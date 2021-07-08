@@ -2,14 +2,14 @@ import React from "react";
 import NavBar from "./NavBar";
 import Post from "../Feeds/Post.jsx";
 import "./NavBar.css";
-function Home() {
+function Home(props) {
   return (
     <div>
       <NavBar />
       <div className="row">
         <div className="col t1"></div>
         <div className="col t2">
-          <Post />
+          <Post {...props} />
         </div>
         <div className="col t3"></div>
       </div>

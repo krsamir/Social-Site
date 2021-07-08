@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import "./Post.css";
-function Post() {
+import ImageUpload from "./ImageUpload";
+import { UploadImages } from "../../Redux/Actions/FeedAction";
+import { connect } from "react-redux";
+
+function Post(props) {
+  const { images } = props;
+  const urls = Array.from(images).map((value) => URL.createObjectURL(value));
+  useEffect(() => {
+    return () => {
+      Array.from(images).map((value) => URL.revokeObjectURL(value));
+    };
+  }, [images]);
   return (
     <div>
       <div className="post">
         <div className="post__top">
-          <i className="fas fa-image icons icon1"></i>
-          <i className="fas fa-map-marker-alt icons"></i>
+          <ImageUpload {...props} />
         </div>
         <div className="post__middle">
           <textarea
@@ -18,6 +28,26 @@ function Post() {
             placeholder="Whats up on your mind "
           ></textarea>
         </div>
+        <div className="post__imageBox">
+          {urls &&
+            urls.map((value, index) => {
+              console.log(value);
+              return (
+                <img
+                  src={value}
+                  key={index}
+                  className="post__images"
+                  alt=""
+                  onClick={(e) => {
+                    console.log(
+                      "🚀 ~ file: Post.jsx ~ line 42 ~ urls.map ~ i",
+                      index
+                    );
+                  }}
+                />
+              );
+            })}
+        </div>
         <div className="post__bottom">
           <Button variant="primary">Post</Button>
         </div>
@@ -25,5 +55,12 @@ function Post() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  images: state.feed.images,
+});
 
-export default Post;
+export default connect(mapStateToProps, {
+  UploadImages,
+})(Post);
+
+// export default Post;
