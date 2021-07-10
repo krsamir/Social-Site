@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import LoginRoutes from "./app/Routes/LoginRoutes.js";
 import AppRoutes from "./app/Routes/AppRoutes.js";
 import auth from "./app/Authentication/Auth.js";
+import SQL from "./app/Database/Database.js";
 
 const app = express();
 app.use(express.json());
@@ -25,6 +26,7 @@ app.post(
   upload.array("myFile[]", 10),
   auth,
   (req, res, next) => {
+    const response = JSON.parse(JSON.stringify(req.body));
     const files = req.files;
     if (!files) {
       const error = new Error("Please choose files");
@@ -32,7 +34,28 @@ app.post(
       res.send({ status: "failed", error });
       // return next(error);
     } else {
-      res.send({ status: "uploaded" });
+      // res.send({ status: "uploaded" });
+      const uploadMedia = `INSERT INTO social__mediaupload (postid, filename, mimetype, size,user_id) VALUES ? ;`;
+      SQL.query(
+        uploadMedia,
+        [
+          files.map((file) => [
+            response.postID,
+            file.filename,
+            file.mimetype,
+            file.size,
+            req.id,
+          ]),
+        ],
+        async (err, response) => {
+          if (err) {
+            console.log(err);
+            res.send(err, null);
+          } else {
+            res.send({ status: "uploaded" });
+          }
+        }
+      );
     }
   }
 );

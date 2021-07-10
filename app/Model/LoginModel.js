@@ -205,10 +205,15 @@ Task.login = (data, result) => {
       if (res.length === 0) {
         result(null, { status: "usernotfound" });
       } else {
+        var date = new Date();
+        var now = date.toLocaleString();
         const response = JSON.parse(JSON.stringify(res))[0];
         // const isMatched = await bcrypt.compare(password, response.password);
         const isMatched = password === response.password;
         if (isMatched) {
+          console.log(
+            `ID = ${response.id} ~ Email = ${response.email} ~ at = ${now}`
+          );
           const token = jwt.sign({ user: email, id: response.id }, JWT_SECRET, {
             expiresIn: JWT_EXPIRATION_TIME,
             // expiresIn: "7 days",

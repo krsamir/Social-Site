@@ -3,7 +3,7 @@ import AppController from "../Controller/AppController.js";
 import auth from "../Authentication/Auth.js";
 
 const appRoutes = (app) => {
-  app.route("/test").get(auth, AppController.test);
+  app.route("/api/post").post(auth, AppController.post);
 };
 
 export default appRoutes;

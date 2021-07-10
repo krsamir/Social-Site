@@ -28,31 +28,71 @@ function Post(props) {
   };
   const handlePost = async () => {
     const formData = new FormData();
-    const file = [];
-    for (let i = 0; i < images.length; i++) {
-      file[i] = new File([images[i]], `${Date.now()}+${images[i].name}`);
-    }
-    for (let i = 0; i < file.length; i++) {
-      formData.append("myFile[]", file[i]);
-      formData.append("Filename", file[i].name);
-    }
-    if (file.length === 0) {
-      // only Text Data
+
+    const { warningToast, successToast, ErrorToast } = props;
+    if (data === "" && images.length === 0) {
+      warningToast("Nothing to upload !!");
+    } else if (data !== "" && images.length === 0) {
+      try {
+        const postId = await createPost(data);
+        if (postId) {
+          successToast("Posted Successfully!");
+          reinitializeData();
+        }
+      } catch (error) {
+        ErrorToast("Some Issues while uploading");
+        console.log(error);
+      }
     } else {
-      // Text with media
+      // upload both
+      try {
+        const postId = await createPost(data);
+        const file = [];
+        for (let i = 0; i < images.length; i++) {
+          file[i] = new File(
+            [images[i]],
+            `${postId}+${Date.now()}+${images[i].name}`
+          );
+        }
+        for (let i = 0; i < file.length; i++) {
+          formData.append("myFile[]", file[i]);
+          // formData.append("Filename", file[i].name);
+        }
+        formData.append("postID", postId);
+        if (postId) {
+          uploadMedia(formData);
+          reinitializeData();
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
+  };
+  const createPost = async (value) => {
+    try {
+      const { data } = await axios.post(`/api/post`, { text: value });
+      return data.postId;
+    } catch (error) {
+      console.log("🚀 ~ file: Post.jsx ~ line 55 ~ createPost ~ error", error);
+    }
+  };
+  const uploadMedia = async (formData) => {
     await axios
       .post("/api/uploadMedia", formData)
       .then((res) => {
         if (res.data.status === "failed") {
           props.ErrorToast("Upload Failed");
         } else if (res.data.status === "uploaded") {
-          props.successToast("uploaded Successfully");
+          props.successToast("Posted Successfully!");
         }
       })
       .catch((e) => {
         console.log("🚀 ~ file: Post.jsx ~ line 33 ~ handlePost ~ e", e);
       });
+  };
+  const reinitializeData = () => {
+    props.UploadImages([]);
+    setdata("");
   };
   return (
     <div>

@@ -2,8 +2,8 @@ import AppModel from "../Model/AppModel.js";
 
 const Task = {};
 
-Task.test = (req, res) => {
-  AppModel.test(req.body, (err, response) => {
+Task.post = (req, res) => {
+  AppModel.post(req, (err, response) => {
     if (err) {
       res.send(err);
     } else {

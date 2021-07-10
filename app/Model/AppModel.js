@@ -2,12 +2,18 @@
 import SQL from "../Database/Database.js";
 
 const Task = {};
-Task.test = (data, result) => {
-  SQL.query("SELECT 1 + 1 AS solution", function (error, results, fields) {
-    if (error) {
-      result(error, null);
+Task.post = (req, result) => {
+  const { id } = req;
+  const { text } = req.body;
+
+  let insertPostData = `INSERT INTO social__post (user_id, text) VALUES ('${id}', '${text}')`;
+  SQL.query(insertPostData, async (err, res) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
     } else {
-      result(null, `Database connection has been established.`);
+      const response = JSON.parse(JSON.stringify(res));
+      result(null, { status: "posted", postId: response.insertId });
     }
   });
 };
