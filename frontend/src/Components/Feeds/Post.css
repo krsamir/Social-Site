@@ -30,6 +30,7 @@
 .post__bottom {
   display: flex;
   justify-content: flex-end;
+  margin-top: 20px;
 }
 
 .post__images {
@@ -44,6 +45,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 20px;
 }
 .image2 {
   margin-left: -10px;

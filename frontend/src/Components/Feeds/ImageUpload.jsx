@@ -28,12 +28,14 @@ const ImageUpload = (props) => {
 
   const onSelectFile = (e) => {
     if (!e.target.files || e.target.files.length === 0) {
-      props.UploadImages(undefined);
+      props.UploadImages([]);
       // setSelectedFile(undefined);
       return;
     }
+    const value = [...props.images];
+
     // I've kept this example simple by using the first image instead of multiple
-    props.UploadImages(e.target.files);
+    props.UploadImages(value.concat(Array.from(e.target.files)));
   };
   return (
     <div>
@@ -42,6 +44,8 @@ const ImageUpload = (props) => {
       </label>
       <input
         type="file"
+        name="myFile[]"
+        encType="multipart/form-data"
         id="upload"
         onChange={onSelectFile}
         multiple
@@ -52,6 +56,10 @@ const ImageUpload = (props) => {
   );
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  images: state.feed.images,
+});
+
+export default connect(mapStateToProps, {
   UploadImages,
 })(ImageUpload);

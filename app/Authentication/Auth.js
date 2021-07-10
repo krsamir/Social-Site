@@ -11,6 +11,7 @@ const auth = (req, res, next) => {
     //   throw new Error();
     // }
     // req.token = token;
+    req.id = decoded.id;
     req.user = decoded.user;
     next();
   } catch (e) {

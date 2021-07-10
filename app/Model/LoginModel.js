@@ -209,7 +209,7 @@ Task.login = (data, result) => {
         // const isMatched = await bcrypt.compare(password, response.password);
         const isMatched = password === response.password;
         if (isMatched) {
-          const token = jwt.sign({ user: email }, JWT_SECRET, {
+          const token = jwt.sign({ user: email, id: response.id }, JWT_SECRET, {
             expiresIn: JWT_EXPIRATION_TIME,
             // expiresIn: "7 days",
           });
