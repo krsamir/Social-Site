@@ -1,0 +1,39 @@
+.feed {
+  /* width: 100%; */
+  /* border: 5px solid #ebebeb; */
+  border-radius: 10px;
+  /* margin: 10px; */
+  margin-bottom: 20px !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: auto;
+}
+.feed__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed__content {
+  min-height: 50px;
+  height: auto;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.feed__hrline {
+  border-top: 1px inset #ebebeb;
+  margin-top: 5px;
+}
+.feed__image {
+  margin-top: 5px;
+}
+.feed__text {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+@media only screen and (max-width: 600px) {
+  .feed {
+    margin: 10px;
+    margin-bottom: 20px !important;
+  }
+}

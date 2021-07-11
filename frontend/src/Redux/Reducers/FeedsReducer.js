@@ -1,7 +1,8 @@
-import { UPLOAD_IMAGE } from "../Actions/types";
+import { UPLOAD_IMAGE, GET_ALL_POST } from "../Actions/types";
 
 const initialState = {
   images: [],
+  allPost: [],
 };
 
 const message = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const message = (state = initialState, action) => {
       return {
         ...state,
         images: action.payload,
+      };
+    case GET_ALL_POST:
+      return {
+        ...state,
+        allPost: action.payload,
       };
 
     default:

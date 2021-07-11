@@ -4,6 +4,7 @@ import auth from "../Authentication/Auth.js";
 
 const appRoutes = (app) => {
   app.route("/api/post").post(auth, AppController.post);
+  app.route("/api/post").get(AppController.getPost);
 };
 
 export default appRoutes;

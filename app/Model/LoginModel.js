@@ -214,10 +214,19 @@ Task.login = (data, result) => {
           console.log(
             `ID = ${response.id} ~ Email = ${response.email} ~ at = ${now}`
           );
-          const token = jwt.sign({ user: email, id: response.id }, JWT_SECRET, {
-            expiresIn: JWT_EXPIRATION_TIME,
-            // expiresIn: "7 days",
-          });
+          const token = jwt.sign(
+            {
+              user: email,
+              id: response.id,
+              firstName: response.firstname,
+              lastName: response.lastname,
+            },
+            JWT_SECRET,
+            {
+              expiresIn: JWT_EXPIRATION_TIME,
+              // expiresIn: "7 days",
+            }
+          );
           return result(null, { token });
         } else {
           result(null, { status: "invaliduser" });

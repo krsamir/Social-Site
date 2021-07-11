@@ -3,7 +3,7 @@ import "./NavBar.css";
 import { Button } from "react-bootstrap";
 const NavBarComponent = () => {
   return (
-    <div>
+    <div className="top">
       <div className="row navbar">
         <div className="col section1">
           <h3>College</h3>

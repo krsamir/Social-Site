@@ -13,6 +13,8 @@ const auth = (req, res, next) => {
     // req.token = token;
     req.id = decoded.id;
     req.user = decoded.user;
+    req.firstName = decoded.firstName;
+    req.lastName = decoded.lastName;
     next();
   } catch (e) {
     console.log({ error: "Authentication required" });

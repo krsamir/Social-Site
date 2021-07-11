@@ -2,9 +2,13 @@
   background-color: #ebebeb;
   height: 60px;
   position: sticky;
-  z-index: 100;
 }
-
+.top {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  top: 0;
+}
 .searchBox {
   width: 100% !important;
   border: none;

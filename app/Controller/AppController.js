@@ -12,4 +12,14 @@ Task.post = (req, res) => {
   });
 };
 
+Task.getPost = (req, res) => {
+  AppModel.getPost(req, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
+
 export default Task;
