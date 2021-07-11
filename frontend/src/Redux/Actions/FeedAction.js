@@ -18,8 +18,8 @@ export const getAllPost = (data) => async (dispatch) => {
       });
     })
     .catch((error) => {
-      window.localStorage.clear();
-      window.location.reload();
+      // window.localStorage.clear();
+      // window.location.reload();
       console.log(error);
     });
 };

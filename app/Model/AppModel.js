@@ -38,22 +38,27 @@ GROUP BY post_id order by t1.post_id desc
       result(err, null);
     } else {
       const tableResponse = JSON.parse(JSON.stringify(response));
-      console.log("🚀 ~ file: AppModel.js ~ line 34 ~ SQL.query ~ ");
       const finalData = tableResponse.map((val) => {
         const value = { ...val };
         if (JSON.parse(value.filename)[0] !== null) {
-          const fileNames = JSON.parse(value.filename);
-          const mimetype = JSON.parse(value.mimetype);
-          // console.log(mimetype);
-          // console.log(fileNames, mimetype);
-          const zip = (a, b) =>
-            a.map((k, i) => {
-              return { filename: k, mimetype: b[i] };
-            });
-          const mediaArray = zip(fileNames, mimetype);
-          delete value.filename;
-          delete value.mimetype;
-          return { ...value, media: mediaArray };
+          try {
+            const fileNames = JSON.parse(value.filename);
+            const mimetype = JSON.parse(value.mimetype);
+            // console.log(mimetype);
+            // console.log(fileNames, mimetype);
+            const zip = (a, b) =>
+              a.map((k, i) => {
+                console.log(k);
+                return { filename: k, mimetype: b[i] };
+              });
+            const mediaArray = zip(fileNames, mimetype);
+            delete value.filename;
+            delete value.mimetype;
+            return { ...value, media: mediaArray };
+          } catch (error) {
+            console.log(err);
+            result(err, null);
+          }
         } else {
           delete value.filename;
           delete value.mimetype;

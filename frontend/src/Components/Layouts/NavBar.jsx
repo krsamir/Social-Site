@@ -6,7 +6,7 @@ const NavBarComponent = () => {
     <div className="top">
       <div className="row navbar">
         <div className="col section1">
-          <h3>College</h3>
+          <h3>Family Book</h3>
         </div>
         <div className="col">
           <div className="nav__center">
