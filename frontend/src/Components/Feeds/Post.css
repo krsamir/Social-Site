@@ -52,11 +52,15 @@
   margin-top: -100px;
   cursor: pointer;
 }
-.t1,
+/* .t1,
 .t3 {
   display: none;
-}
+} */
 
+@import url("https://fonts.googleapis.com/css2?family=Handlee&display=swap");
+* {
+  font-family: "Handlee", cursive;
+}
 @media only screen and (max-width: 600px) {
   .t1,
   .t3 {
