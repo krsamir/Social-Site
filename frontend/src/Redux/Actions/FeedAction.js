@@ -1,4 +1,4 @@
-import { UPLOAD_IMAGE, GET_ALL_POST } from "./types";
+import { UPLOAD_IMAGE, GET_ALL_POST, CREATE_POST } from "./types";
 import axios from "axios";
 export const UploadImages = (data) => async (dispatch) => {
   dispatch({
@@ -18,8 +18,8 @@ export const getAllPost = (data) => async (dispatch) => {
       });
     })
     .catch((error) => {
-      // window.localStorage.clear();
-      // window.location.reload();
+      window.localStorage.clear();
+      window.location.reload();
       console.log(error);
     });
 };

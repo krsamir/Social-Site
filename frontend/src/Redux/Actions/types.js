@@ -7,3 +7,4 @@ export const SET_USER_DETAIL = "SET_USER_DETAIL";
 export const FETCH_NOTICE = "FETCH_NOTICE";
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE";
 export const GET_ALL_POST = "GET_ALL_POST";
+export const CREATE_POST = "CREATE_POST";

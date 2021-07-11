@@ -1,4 +1,4 @@
-import { UPLOAD_IMAGE, GET_ALL_POST } from "../Actions/types";
+import { UPLOAD_IMAGE, GET_ALL_POST, CREATE_POST } from "../Actions/types";
 
 const initialState = {
   images: [],
@@ -17,6 +17,8 @@ const message = (state = initialState, action) => {
         ...state,
         allPost: action.payload,
       };
+    case CREATE_POST:
+      return null;
 
     default:
       return state;

@@ -3,6 +3,7 @@ import { Avatar } from "@material-ui/core";
 import "./Feed.css";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Image from "react-bootstrap/Image";
 const Feed = ({ data }) => {
   const [index, setIndex] = useState(0);
@@ -17,14 +18,17 @@ const Feed = ({ data }) => {
       fullName = first;
     }
     const { media } = data;
-    // console.log(data);
+    console.log(index);
     return (
       <div>
         <div className="feed">
           <div className="feed__body">
             <div className="feed__header">
-              <Avatar>{fullName}</Avatar>
-              {data.posted_by}
+              <Avatar className="feed__header__avatar">
+                <span className="feed__header__avatar__text">{fullName}</span>
+              </Avatar>
+              <span className="feed__header__text">{data.posted_by}</span>
+              <MoreVertIcon style={{ cursor: "pointer" }} />
             </div>
             <div className="feed__hrline"></div>
             <div className="feed__content">
@@ -33,15 +37,16 @@ const Feed = ({ data }) => {
                 <div className="feed__image feed__post__imageBox">
                   <div className="bigBox" style={{ width: "100%" }}>
                     <div className="box1">
-                      <ChevronLeftIcon
-                        className="arrow"
-                        onClick={() => {
-                          if (index >= 1) {
-                            setIndex((prevState) => prevState - 1);
-                          }
-                          console.log(data.media.length, index);
-                        }}
-                      />
+                      {data.media.length > 1 && (
+                        <ChevronLeftIcon
+                          className="arrow"
+                          onClick={() => {
+                            if (index >= 1) {
+                              setIndex((prevState) => prevState - 1);
+                            }
+                          }}
+                        />
+                      )}
                     </div>
                     <div className="box2">
                       <Image
@@ -76,15 +81,16 @@ const Feed = ({ data }) => {
                       })} */}
                     </div>
                     <div className="box3">
-                      <ChevronRightIcon
-                        className="arrow"
-                        onClick={() => {
-                          if (index < data.media.length - 1) {
-                            setIndex((prevState) => prevState + 1);
-                          }
-                          console.log(data.media.length, index);
-                        }}
-                      />
+                      {data.media.length > 1 && (
+                        <ChevronRightIcon
+                          className="arrow"
+                          onClick={() => {
+                            if (index < data.media.length - 1) {
+                              setIndex((prevState) => prevState + 1);
+                            }
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="feed__hrline"></div>

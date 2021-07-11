@@ -79,7 +79,23 @@
 * {
   font-size: medium;
 }
+.feed__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.feed__header__text {
+  margin-left: 10px;
+  flex: 1;
+}
 
+.feed__header__avatar {
+  height: 40px !important;
+  width: 40px !important;
+}
+.feed__header__avatar__text {
+  font-size: smaller;
+}
 @media only screen and (max-width: 600px) {
   .feed {
     margin: 10px;
