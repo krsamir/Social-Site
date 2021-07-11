@@ -1,7 +1,6 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
 import "./Feed.css";
-import image from "../../Uploads/81+1625991662606+michal-parzuchowski-EFvP9cHipMQ-unsplash.jpg";
 const Feed = ({ data }) => {
   if (data) {
     var fullName = "";
