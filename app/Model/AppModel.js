@@ -5,17 +5,16 @@ const Task = {};
 Task.post = (req, result) => {
   const { id, firstName, lastName } = req;
   const { text } = req.body;
+  const postedBy = firstName + " " + lastName;
 
-  let insertPostData = `INSERT INTO social__post (user_id, text, posted_by) VALUES ('${id}', '${text}','${
-    firstName + " " + lastName
-  }')`;
+  let insertPostData = `INSERT INTO social__post (user_id, text, posted_by) VALUES ('${id}', '${text}','${postedBy}')`;
   SQL.query(insertPostData, async (err, res) => {
     if (err) {
       console.log(err);
       result(err, null);
     } else {
       const response = JSON.parse(JSON.stringify(res));
-      result(null, { status: "posted", postId: response.insertId });
+      result(null, { status: "posted", postId: response.insertId, postedBy });
     }
   });
 };

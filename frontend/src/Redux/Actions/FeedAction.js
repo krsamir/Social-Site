@@ -1,10 +1,9 @@
 import {
   UPLOAD_MEDIA_ARRAY,
   GET_ALL_POST,
-  CREATE_POST,
   SUCCESS_TOAST,
   ERROR_TOAST,
-  // UPLOAD_IMAGES,
+  ADD_NEW_POST,
 } from "./types";
 import axios from "axios";
 export const UploadImages = (data) => async (dispatch) => {
@@ -32,12 +31,24 @@ export const getAllPost = (data) => async (dispatch) => {
 };
 
 export const createPost = (value) => async (dispatch) => {
+  const newArray = {};
+
   try {
     const { data } = await axios.post(`/api/post`, { text: value });
     if (data.status === "posted") {
+      newArray.post_id = data.postId;
+      newArray.posted_by = data.postedBy;
+      newArray.status = 1;
+      newArray.text = value;
+      newArray.media = null;
+      dispatch({
+        type: ADD_NEW_POST,
+        payload: newArray,
+      });
+
       dispatch({
         type: SUCCESS_TOAST,
-        payload: "Posted 😄😃 !!",
+        payload: "Posted !! 😄😃 ",
       });
     }
   } catch (error) {
@@ -49,9 +60,16 @@ export const createPost = (value) => async (dispatch) => {
 };
 
 export const uploadMedia = (value, images) => async (dispatch) => {
+  const newArray = {};
   try {
     const formData = new FormData();
     const { data } = await axios.post(`/api/post`, { text: value });
+    // const data = { postedBy: "Ajay" };
+    newArray.post_id = data.postId;
+    newArray.posted_by = data.postedBy;
+    newArray.status = 1;
+    newArray.text = value;
+    // For dev
     if (data.postId) {
       const file = [];
       for (let i = 0; i < images.length; i++) {
@@ -60,6 +78,10 @@ export const uploadMedia = (value, images) => async (dispatch) => {
           `${data.postId}+${Date.now()}+${images[i].name}`
         );
       }
+      const imageArray = Array.from(file).map((value) => {
+        return { filename: value.name, mimetype: "application/octet-stream" };
+      });
+      newArray.media = imageArray;
       for (let i = 0; i < file.length; i++) {
         formData.append("myFile[]", file[i]);
       }
@@ -67,14 +89,20 @@ export const uploadMedia = (value, images) => async (dispatch) => {
 
       const response = await axios.post("/api/uploadMedia", formData);
       if (response.data.status === "uploaded") {
+        setTimeout(() => {
+          dispatch({
+            type: ADD_NEW_POST,
+            payload: newArray,
+          });
+        }, 1000);
         dispatch({
           type: SUCCESS_TOAST,
-          payload: "Posted 😄😃!!",
+          payload: "Posted!! 😄😃 ",
         });
       } else {
         dispatch({
           type: ERROR_TOAST,
-          payload: "Upload Failed 😑",
+          payload: "Upload Failed 😑 ",
         });
       }
     }
@@ -85,3 +113,6 @@ export const uploadMedia = (value, images) => async (dispatch) => {
     );
   }
 };
+// function getUniqueId(min, max) {
+//   return Math.trunc(Math.random() * (max - min) + min);
+// }

@@ -7,5 +7,5 @@ export const SET_USER_DETAIL = "SET_USER_DETAIL";
 export const FETCH_NOTICE = "FETCH_NOTICE";
 export const UPLOAD_MEDIA_ARRAY = "UPLOAD_MEDIA_ARRAY";
 export const GET_ALL_POST = "GET_ALL_POST";
-export const CREATE_POST = "CREATE_POST";
 export const UPLOAD_IMAGES = "UPLOAD_IMAGES";
+export const ADD_NEW_POST = "ADD_NEW_POST";
