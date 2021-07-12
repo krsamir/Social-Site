@@ -18,7 +18,6 @@ const Feed = ({ data }) => {
       fullName = first;
     }
     const { media } = data;
-    console.log(index);
     return (
       <div>
         <div className="feed">
