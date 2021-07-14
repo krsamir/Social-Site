@@ -52,7 +52,7 @@ const Feed = ({ data }) => {
                         className="feed__post__images"
                         // src={`../../Uploads/${value.filename}`}
                         src={
-                          require(`../../Uploads/${media[index].filename}`)
+                          require(`../../../../Uploads/${media[index].filename}`)
                             .default
                         }
                         alt="imageHere"

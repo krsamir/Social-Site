@@ -1,20 +1,21 @@
 {
   "files": {
     "main.css": "/static/css/main.2fe37a7b.chunk.css",
-    "main.js": "/static/js/main.cf73db28.chunk.js",
-    "main.js.map": "/static/js/main.cf73db28.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.b5a93b3b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.b5a93b3b.js.map",
+    "main.js": "/static/js/main.6698b648.chunk.js",
+    "main.js.map": "/static/js/main.6698b648.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.29288d97.js",
+    "runtime-main.js.map": "/static/js/runtime-main.29288d97.js.map",
     "static/css/2.bb25cdbb.chunk.css": "/static/css/2.bb25cdbb.chunk.css",
-    "static/js/2.400c42a5.chunk.js": "/static/js/2.400c42a5.chunk.js",
-    "static/js/2.400c42a5.chunk.js.map": "/static/js/2.400c42a5.chunk.js.map",
-    "static/js/3.2c21869f.chunk.js": "/static/js/3.2c21869f.chunk.js",
-    "static/js/3.2c21869f.chunk.js.map": "/static/js/3.2c21869f.chunk.js.map",
+    "static/js/2.d263e1bf.chunk.js": "/static/js/2.d263e1bf.chunk.js",
+    "static/js/2.d263e1bf.chunk.js.map": "/static/js/2.d263e1bf.chunk.js.map",
+    "static/js/3.fd8acc1c.chunk.js": "/static/js/3.fd8acc1c.chunk.js",
+    "static/js/3.fd8acc1c.chunk.js.map": "/static/js/3.fd8acc1c.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.bb25cdbb.chunk.css.map": "/static/css/2.bb25cdbb.chunk.css.map",
     "static/css/main.2fe37a7b.chunk.css.map": "/static/css/main.2fe37a7b.chunk.css.map",
-    "static/js/2.400c42a5.chunk.js.LICENSE.txt": "/static/js/2.400c42a5.chunk.js.LICENSE.txt",
+    "static/js/2.d263e1bf.chunk.js.LICENSE.txt": "/static/js/2.d263e1bf.chunk.js.LICENSE.txt",
     "static/media/10+1626102257911+WhatsApp Image 2021-06-15 at 5.17.11 PM (1).jpeg": "/static/media/10+1626102257911+WhatsApp Image 2021-06-15 at 5.17.11 PM (1).4625f902.jpeg",
+    "static/media/10+1626153287157+images.jpeg": "/static/media/10+1626153287157+images.989d14f5.jpeg",
     "static/media/11+1626102333980+cloudlog.png": "/static/media/11+1626102333980+cloudlog.7f5c8500.png",
     "static/media/14+1626075267472+tree.jpg": "/static/media/14+1626075267472+tree.a4ff3009.jpg",
     "static/media/14+1626104045306+Transaction 1.jpeg": "/static/media/14+1626104045306+Transaction 1.b60fa21a.jpeg",
@@ -49,16 +50,23 @@
     "static/media/27+1626104962733+pexels-photo-933054.jpeg": "/static/media/27+1626104962733+pexels-photo-933054.2733b539.jpeg",
     "static/media/29+1626079266333+Aadhaar card (Back).jpg": "/static/media/29+1626079266333+Aadhaar card (Back).826d3a61.jpg",
     "static/media/29+1626079266334+AAdhaar Card (Front).jpg": "/static/media/29+1626079266334+AAdhaar Card (Front).f768ea02.jpg",
+    "static/media/5+1626108090184+Transaction 1.jpeg": "/static/media/5+1626108090184+Transaction 1.b60fa21a.jpeg",
+    "static/media/5+1626108090184+Transaction 2.jpeg": "/static/media/5+1626108090184+Transaction 2.c18af303.jpeg",
+    "static/media/6+1626108179319+Transaction 1.jpeg": "/static/media/6+1626108179319+Transaction 1.b60fa21a.jpeg",
+    "static/media/6+1626108179320+Transaction 2.jpeg": "/static/media/6+1626108179320+Transaction 2.c18af303.jpeg",
     "static/media/7+1626065901500+michal-parzuchowski-EFvP9cHipMQ-unsplash.jpg": "/static/media/7+1626065901500+michal-parzuchowski-EFvP9cHipMQ-unsplash.29f38654.jpg",
+    "static/media/7+1626152872836+localhost_19006_(Galaxy S5).png": "/static/media/7+1626152872836+localhost_19006_(Galaxy S5).8bd83d72.png",
     "static/media/8+1626089595753+michal-parzuchowski-EFvP9cHipMQ-unsplash.jpg": "/static/media/8+1626089595753+michal-parzuchowski-EFvP9cHipMQ-unsplash.29f38654.jpg",
     "static/media/8+1626089595754+pexels-photo-933054.jpeg": "/static/media/8+1626089595754+pexels-photo-933054.2733b539.jpeg",
-    "static/media/9+1626089700239+tree.jpg": "/static/media/9+1626089700239+tree.a4ff3009.jpg"
+    "static/media/8+1626152999659+Connection Pool.png": "/static/media/8+1626152999659+Connection Pool.c0fbae30.png",
+    "static/media/9+1626089700239+tree.jpg": "/static/media/9+1626089700239+tree.a4ff3009.jpg",
+    "static/media/9+1626153071472+Pass Book.jpeg": "/static/media/9+1626153071472+Pass Book.368a8628.jpeg"
   },
   "entrypoints": [
-    "static/js/runtime-main.b5a93b3b.js",
+    "static/js/runtime-main.29288d97.js",
     "static/css/2.bb25cdbb.chunk.css",
-    "static/js/2.400c42a5.chunk.js",
+    "static/js/2.d263e1bf.chunk.js",
     "static/css/main.2fe37a7b.chunk.css",
-    "static/js/main.cf73db28.chunk.js"
+    "static/js/main.6698b648.chunk.js"
   ]
 }

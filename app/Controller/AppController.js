@@ -22,4 +22,14 @@ Task.getPost = (req, res) => {
   });
 };
 
+Task.search = (req, res) => {
+  AppModel.search(req, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
+
 export default Task;

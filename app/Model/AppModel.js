@@ -61,4 +61,17 @@ GROUP BY post_id order by t1.post_id desc
   });
 };
 
+Task.search = (req, result) => {
+  const params = req.query.query;
+  let getAllPost = `SELECT * FROM register where email like ("%${params}%") or firstname like ("%${params}%") or lastname like ("%${params}%")`;
+  SQL.query(getAllPost, async (err, response) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, response);
+    }
+  });
+};
+
 export default Task;

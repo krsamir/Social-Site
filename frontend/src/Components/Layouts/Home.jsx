@@ -6,7 +6,7 @@ import "./NavBar.css";
 function Home(props) {
   return (
     <div>
-      <NavBar />
+      <NavBar {...props} />
       <div className="row" style={{ marginTop: "60px" }}>
         <div className="col t1"></div>
         <div className="col t2">
