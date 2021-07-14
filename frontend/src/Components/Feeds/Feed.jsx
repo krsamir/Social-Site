@@ -5,6 +5,8 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Image from "react-bootstrap/Image";
+import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
+import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
 const Feed = ({ data }) => {
   const [index, setIndex] = useState(0);
   if (data) {
@@ -29,8 +31,9 @@ const Feed = ({ data }) => {
               <span className="feed__header__text">{data.posted_by}</span>
               <MoreVertIcon style={{ cursor: "pointer" }} />
             </div>
-            <div className="feed__hrline"></div>
+            {/* <div className="feed__hrline"></div> */}
             <div className="feed__content">
+              <hr />
               <div className="feed__text">{data.text}</div>
               {media !== null && (
                 <div className="feed__image feed__post__imageBox">
@@ -92,9 +95,44 @@ const Feed = ({ data }) => {
                       )}
                     </div>
                   </div>
-                  <div className="feed__hrline"></div>
                 </div>
               )}
+            </div>
+            <div className="feed__footer">
+              <hr />
+              <div className="row">
+                <div className="col">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "row",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <div>
+                      <ThumbUpAltOutlinedIcon />
+                      <span>(0)</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="col">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "row",
+                      borderLeft: "0.5px inset #ebebeb",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <div>
+                      <ModeCommentOutlinedIcon />
+                      <span>(0)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

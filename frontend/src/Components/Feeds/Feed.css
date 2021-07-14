@@ -14,15 +14,15 @@
 }
 
 .feed__content {
-  min-height: 50px;
+  min-height: 100px;
   height: auto;
   max-height: 500px;
   overflow-y: auto;
 }
-.feed__hrline {
+/* .feed__hrline {
   border-top: 1px inset #ebebeb;
   margin-top: 5px;
-}
+} */
 /* .feed__image {
   margin-top: 5px;
 } */
@@ -95,6 +95,11 @@
 }
 .feed__header__avatar__text {
   font-size: smaller;
+}
+
+.feed__bottom__icons {
+  display: flex;
+  justify-content: center;
 }
 @media only screen and (max-width: 600px) {
   .feed {
