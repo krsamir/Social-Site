@@ -32,4 +32,13 @@ Task.search = (req, res) => {
   });
 };
 
+Task.likepost = (req, res) => {
+  AppModel.likepost(req, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
 export default Task;

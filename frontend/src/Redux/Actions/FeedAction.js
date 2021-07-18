@@ -41,6 +41,8 @@ export const createPost = (value) => async (dispatch) => {
       newArray.status = 1;
       newArray.text = value;
       newArray.media = null;
+      newArray.likedByCurrentUser = 0;
+      newArray.totalLikes = 0;
       dispatch({
         type: ADD_NEW_POST,
         payload: newArray,
@@ -69,6 +71,8 @@ export const uploadMedia = (value, images) => async (dispatch) => {
     newArray.posted_by = data.postedBy;
     newArray.status = 1;
     newArray.text = value;
+    newArray.likedByCurrentUser = 0;
+    newArray.totalLikes = 0;
     // For dev
     if (data.postId) {
       const file = [];

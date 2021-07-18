@@ -21,23 +21,15 @@ Task.post = (req, result) => {
 
 Task.getPost = (req, result) => {
   // let getAllPost = `select * from social__post order by post_id desc`;
-  let getAllPost = `SELECT 
-  t1.post_id,t1.text,t1.status,t1.posted_by,
-  JSON_ARRAYAGG(t2.filename) AS filename,
-  JSON_ARRAYAGG(t2.mimetype) AS mimetype
-FROM
-  social__post AS t1
-      LEFT JOIN
-  social__mediaupload AS t2 ON t1.post_id = t2.postid
-GROUP BY post_id order by t1.post_id desc
-`;
+  let getAllPost = `call getAllPost(${req.id})`;
   SQL.query(getAllPost, async (err, response) => {
     if (err) {
       console.log(err);
       result(err, null);
     } else {
       const tableResponse = JSON.parse(JSON.stringify(response));
-      const finalData = tableResponse.map((val) => {
+      const finalResponse = tableResponse[0];
+      const finalData = finalResponse.map((val) => {
         const value = { ...val };
         if (JSON.parse(value.filename)[0] !== null) {
           const fileNames = JSON.parse(value.filename);
@@ -70,6 +62,20 @@ Task.search = (req, result) => {
       result(err, null);
     } else {
       result(null, response);
+    }
+  });
+};
+
+Task.likepost = (data, result) => {
+  const { params, id } = data;
+  const post_id = params.post_id;
+  const likeQuery = `call social__like ('${post_id}', '${id}');`;
+  SQL.query(likeQuery, (err, res) => {
+    if (err) {
+      console.log(err);
+      result(null, err);
+    } else {
+      result({ status: res });
     }
   });
 };

@@ -4,8 +4,9 @@ import auth from "../Authentication/Auth.js";
 
 const appRoutes = (app) => {
   app.route("/api/post").post(auth, AppController.post);
-  app.route("/api/post").get(AppController.getPost);
-  app.route("/api/search").get(AppController.search);
+  app.route("/api/post").get(auth, AppController.getPost);
+  app.route("/api/search").get(auth, AppController.search);
+  app.route("/api/like/:post_id").get(auth, AppController.likepost);
 };
 
 export default appRoutes;

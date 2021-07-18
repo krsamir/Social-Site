@@ -9,9 +9,9 @@ const Feeds = (props) => {
   }, [getAllPost]);
   return (
     <div>
-      {data.map((value) => {
+      {data.map((value, index) => {
         return (
-          <div key={value.post_id}>
+          <div key={index}>
             <Feed {...props} data={value} />
           </div>
         );

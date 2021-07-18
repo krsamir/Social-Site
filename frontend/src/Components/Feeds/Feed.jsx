@@ -7,6 +7,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Image from "react-bootstrap/Image";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import axios from "axios";
 const Feed = ({ data }) => {
   const [index, setIndex] = useState(0);
   if (data) {
@@ -19,7 +21,19 @@ const Feed = ({ data }) => {
       const first = data.posted_by.split(" ")[0].charAt(0).toUpperCase();
       fullName = first;
     }
-    const { media } = data;
+    const handleLike = (data) => {
+      const { post_id } = data;
+      axios
+        .get(`/api/like/${post_id}`)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    const { media, totalLikes, likedByCurrentUser } = data;
+
     return (
       <div>
         <div className="feed">
@@ -108,11 +122,18 @@ const Feed = ({ data }) => {
                       justifyContent: "center",
                       flexDirection: "row",
                       cursor: "pointer",
+                      alignItems: "center",
                     }}
+                    onClick={() => handleLike(data)}
                   >
                     <div>
-                      <ThumbUpAltOutlinedIcon />
-                      <span>(0)</span>
+                      {likedByCurrentUser === 0 ? (
+                        <ThumbUpAltOutlinedIcon />
+                      ) : (
+                        <ThumbUpAltIcon />
+                      )}
+
+                      <span>({totalLikes === null ? "0" : totalLikes})</span>
                     </div>
                   </div>
                 </div>
@@ -124,6 +145,7 @@ const Feed = ({ data }) => {
                       flexDirection: "row",
                       borderLeft: "0.5px inset #ebebeb",
                       cursor: "pointer",
+                      alignContent: "center",
                     }}
                   >
                     <div>

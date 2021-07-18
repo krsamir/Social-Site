@@ -235,4 +235,5 @@ Task.login = (data, result) => {
     }
   });
 };
+
 export default Task;
