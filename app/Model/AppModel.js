@@ -69,7 +69,7 @@ Task.search = (req, result) => {
 Task.likepost = (data, result) => {
   const { params, id } = data;
   const post_id = params.post_id;
-  const likeQuery = `call social__like ('${post_id}', '${id}');`;
+  const likeQuery = `call social__like ('${post_id}', '${id}',@value);`;
   SQL.query(likeQuery, (err, res) => {
     if (err) {
       console.log(err);

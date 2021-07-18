@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar } from "@material-ui/core";
 import "./Feed.css";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -10,7 +10,14 @@ import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import axios from "axios";
 const Feed = ({ data }) => {
+  const [noOfLikes, setNoOfLikes] = useState(0);
+  useEffect(() => {
+    if (data !== undefined) {
+      setNoOfLikes(data.totalLikes);
+    }
+  }, [data]);
   const [index, setIndex] = useState(0);
+  const [likeState, setLikeState] = useState(data);
   if (data) {
     var fullName = "";
     if (data.posted_by.split(" ").length >= 2) {
@@ -26,14 +33,20 @@ const Feed = ({ data }) => {
       axios
         .get(`/api/like/${post_id}`)
         .then((res) => {
-          console.log(res.data);
+          const value = { ...data };
+          value.likedByCurrentUser = res.data.status[0][0].returnValue;
+          if (res.data.status[0][0].returnValue === 0) {
+            setNoOfLikes((prevState) => prevState - 1);
+          } else if (res.data.status[0][0].returnValue === 1) {
+            setNoOfLikes((prevState) => prevState + 1);
+          }
+          setLikeState(value);
         })
         .catch((e) => {
           console.log(e);
         });
     };
-    const { media, totalLikes, likedByCurrentUser } = data;
-
+    const { media } = data;
     return (
       <div>
         <div className="feed">
@@ -128,13 +141,13 @@ const Feed = ({ data }) => {
                     onClick={() => handleLike(data)}
                   >
                     <div>
-                      {likedByCurrentUser === 0 ? (
+                      {likeState.likedByCurrentUser === 0 ? (
                         <ThumbUpAltOutlinedIcon />
                       ) : (
                         <ThumbUpAltIcon />
                       )}
 
-                      <span>({totalLikes === null ? "0" : totalLikes})</span>
+                      <span>({noOfLikes === null ? "0" : noOfLikes})</span>
                     </div>
                   </div>
                 </div>
@@ -167,3 +180,5 @@ const Feed = ({ data }) => {
 };
 
 export default Feed;
+// DELETED
+// INSERTED
