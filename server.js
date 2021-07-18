@@ -14,6 +14,7 @@ app.use(express.json());
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    // cb(null, path.join(__dirname, "./frontend/build/static/media"));
     cb(null, path.join(__dirname, "./Uploads"));
     // cb(null, path.join(__dirname, "./frontend/src/Uploads"));
   },
