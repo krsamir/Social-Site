@@ -8,16 +8,26 @@ import Image from "react-bootstrap/Image";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import { Button, Menu, MenuItem } from "@material-ui/core";
 import axios from "axios";
 const Feed = ({ data }) => {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const [noOfLikes, setNoOfLikes] = useState(0);
+  const [likeState, setLikeState] = useState(data);
   useEffect(() => {
     if (data !== undefined) {
       setNoOfLikes(data.totalLikes);
     }
   }, [data]);
   const [index, setIndex] = useState(0);
-  const [likeState, setLikeState] = useState(data);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   if (data) {
     var fullName = "";
     if (data.posted_by.split(" ").length >= 2) {
@@ -56,7 +66,12 @@ const Feed = ({ data }) => {
                 <span className="feed__header__avatar__text">{fullName}</span>
               </Avatar>
               <span className="feed__header__text">{data.posted_by}</span>
-              <MoreVertIcon style={{ cursor: "pointer" }} />
+              <MoreVertIcon
+                style={{ cursor: "pointer" }}
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              />
             </div>
             {/* <div className="feed__hrline"></div> */}
             <div className="feed__content">
@@ -171,6 +186,18 @@ const Feed = ({ data }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            <MenuItem onClick={handleClose}>Report</MenuItem>
+          </Menu>
         </div>
       </div>
     );
