@@ -25,8 +25,7 @@ export const getAllPost = (data) => async (dispatch) => {
       });
     })
     .catch((error) => {
-      window.localStorage.clear();
-      window.location.reload();
+      removeTokens();
       console.log(error);
     });
 };
@@ -43,8 +42,7 @@ export const getPostByUser = (data) => async (dispatch) => {
       });
     })
     .catch((error) => {
-      window.localStorage.clear();
-      window.location.reload();
+      removeTokens();
       console.log(error);
     });
 };
@@ -74,6 +72,7 @@ export const createPost = (value) => async (dispatch) => {
       });
     }
   } catch (error) {
+    removeTokens();
     console.log(
       "🚀 ~ file: FeedAction.js ~ line 36 ~ createPost ~ error",
       error
@@ -131,6 +130,7 @@ export const uploadMedia = (value, images) => async (dispatch) => {
       }
     }
   } catch (error) {
+    removeTokens();
     console.log(
       "🚀 ~ file: FeedAction.js ~ line 58 ~ uploadMedia ~ error",
       error
@@ -162,6 +162,12 @@ export const deletePost = (userID) => async (dispatch) => {
       }
     })
     .catch((e) => {
+      removeTokens();
       console.log("🚀 ~ file: Feed.jsx ~ line 72 ~ handleDelete ~ e", e);
     });
+};
+
+const removeTokens = () => {
+  window.localStorage.clear();
+  window.location.reload();
 };
