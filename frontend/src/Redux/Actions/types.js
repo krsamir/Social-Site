@@ -9,3 +9,4 @@ export const UPLOAD_MEDIA_ARRAY = "UPLOAD_MEDIA_ARRAY";
 export const GET_ALL_POST = "GET_ALL_POST";
 export const UPLOAD_IMAGES = "UPLOAD_IMAGES";
 export const ADD_NEW_POST = "ADD_NEW_POST";
+export const DELETE_POST = "DELETE_POST";

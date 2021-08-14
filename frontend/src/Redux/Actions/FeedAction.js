@@ -4,6 +4,8 @@ import {
   SUCCESS_TOAST,
   ERROR_TOAST,
   ADD_NEW_POST,
+  DELETE_POST,
+  WARNING_TOAST,
 } from "./types";
 import axios from "axios";
 export const UploadImages = (data) => async (dispatch) => {
@@ -60,6 +62,7 @@ export const createPost = (value) => async (dispatch) => {
       newArray.media = null;
       newArray.likedByCurrentUser = 0;
       newArray.totalLikes = 0;
+      newArray.parent = true;
       dispatch({
         type: ADD_NEW_POST,
         payload: newArray,
@@ -137,3 +140,28 @@ export const uploadMedia = (value, images) => async (dispatch) => {
 // function getUniqueId(min, max) {
 //   return Math.trunc(Math.random() * (max - min) + min);
 // }
+export const deletePost = (userID) => async (dispatch) => {
+  await axios
+    .delete(`/api/deleteFeed/${userID}`)
+    .then((res) => {
+      if (res.data.status === "deleted") {
+        dispatch({
+          type: SUCCESS_TOAST,
+          payload: "Post Deleted Successfuly!! 😄😃 ",
+        });
+        // On success deletion remove the particular object from array
+        dispatch({
+          type: DELETE_POST,
+          payload: userID,
+        });
+      } else {
+        dispatch({
+          type: WARNING_TOAST,
+          payload: "Some Issue While Deleting!! 😄😃 ",
+        });
+      }
+    })
+    .catch((e) => {
+      console.log("🚀 ~ file: Feed.jsx ~ line 72 ~ handleDelete ~ e", e);
+    });
+};

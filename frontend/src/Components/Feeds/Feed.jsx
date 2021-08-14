@@ -12,7 +12,7 @@ import { Menu, MenuItem } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import { successToast, warningToast } from "../../Redux/Actions/ToastAction";
+import { deletePost } from "../../Redux/Actions/FeedAction";
 const Feed = (props) => {
   const { data } = props;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -60,21 +60,8 @@ const Feed = (props) => {
           console.log(e);
         });
     };
-    // props.successToast("hello");
     const handleDelete = (userID) => {
-      console.log(userID);
-      axios
-        .delete(`/api/deleteFeed/${userID}`)
-        .then((res) => {
-          if (res.data.status === "deleted") {
-            props.successToast("Post Deleted Successfuly !!");
-          } else {
-            props.warningToast("Some issue while deleting the post !!");
-          }
-        })
-        .catch((e) => {
-          console.log("🚀 ~ file: Feed.jsx ~ line 72 ~ handleDelete ~ e", e);
-        });
+      props.deletePost(userID);
       handleClose();
     };
     const { media } = data;
@@ -232,6 +219,5 @@ const Feed = (props) => {
 };
 
 export default connect(null, {
-  successToast,
-  warningToast,
+  deletePost,
 })(Feed);

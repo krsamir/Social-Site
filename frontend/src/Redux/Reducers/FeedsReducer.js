@@ -3,6 +3,7 @@ import {
   GET_ALL_POST,
   UPLOAD_IMAGES,
   ADD_NEW_POST,
+  DELETE_POST,
 } from "../Actions/types";
 
 const initialState = {
@@ -34,6 +35,17 @@ const message = (state = initialState, action) => {
         allPost: [...allPost],
       };
 
+    case DELETE_POST:
+      const data = { ...state };
+      const dataArray = data.allPost;
+      const index = dataArray.map((val) => val.post_id).indexOf(action.payload);
+      if (index > -1) {
+        dataArray.splice(index, 1);
+      }
+      return {
+        ...state,
+        allPost: [...dataArray],
+      };
     default:
       return state;
   }
