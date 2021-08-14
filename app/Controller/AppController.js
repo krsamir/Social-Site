@@ -41,4 +41,31 @@ Task.likepost = (req, res) => {
     }
   });
 };
+
+Task.particularPost = (req, res) => {
+  let queryFor = "";
+  if (req.body.userId === null) {
+    queryFor = req.id;
+  } else {
+    queryFor = req.body.userId;
+  }
+  AppModel.particularPost(queryFor, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
+
+Task.deleteFeed = (req, res) => {
+  AppModel.deleteFeed(req, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
+
 export default Task;

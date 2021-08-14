@@ -41,11 +41,11 @@ Task.getPost = (req, result) => {
           const mediaArray = zip(fileNames, mimetype);
           delete value.filename;
           delete value.mimetype;
-          return { ...value, media: mediaArray };
+          return { ...value, media: mediaArray, parent: value.user_id };
         } else {
           delete value.filename;
           delete value.mimetype;
-          return { ...value, media: null };
+          return { ...value, media: null, parent: value.user_id === req.id };
         }
       });
       result(null, { response: finalData });
@@ -76,6 +76,53 @@ Task.likepost = (data, result) => {
       result(null, err);
     } else {
       result({ status: res });
+    }
+  });
+};
+
+Task.particularPost = (data, result) => {
+  const getPostQUery = `call postByUser('${data}');`;
+  SQL.query(getPostQUery, (err, response) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      const tableResponse = JSON.parse(JSON.stringify(response));
+      const finalResponse = tableResponse[0];
+      const finalData = finalResponse.map((val) => {
+        const value = { ...val };
+        if (JSON.parse(value.filename)[0] !== null) {
+          const fileNames = JSON.parse(value.filename);
+          const mimetype = JSON.parse(value.mimetype);
+          const zip = (a, b) =>
+            a.map((k, i) => {
+              return { filename: k, mimetype: b[i] };
+            });
+          const mediaArray = zip(fileNames, mimetype);
+          delete value.filename;
+          delete value.mimetype;
+          return { ...value, media: mediaArray };
+        } else {
+          delete value.filename;
+          delete value.mimetype;
+          return { ...value, media: null };
+        }
+      });
+      result(null, { response: finalData });
+    }
+  });
+};
+
+Task.deleteFeed = (req, result) => {
+  const { userID } = req.params;
+  // const deleteQuery = `DELETE FROM social__post WHERE post_id = ${userID}`;
+  const deleteQuery = `select * FROM social__post WHERE post_id = ${userID}`;
+  SQL.query(deleteQuery, (err, res) => {
+    if (err) {
+      console.log(err);
+      result(null, err);
+    } else {
+      result({ status: "deleted" });
     }
   });
 };

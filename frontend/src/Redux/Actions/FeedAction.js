@@ -17,10 +17,27 @@ export const getAllPost = (data) => async (dispatch) => {
   await axios
     .get(`/api/post`)
     .then((response) => {
+      dispatch({
+        type: GET_ALL_POST,
+        payload: response.data.response,
+      });
+    })
+    .catch((error) => {
+      window.localStorage.clear();
+      window.location.reload();
+      console.log(error);
+    });
+};
+
+export const getPostByUser = (data) => async (dispatch) => {
+  await axios
+    .post(`/api/single`, { userId: data })
+    .then((response) => {
       // console.log(response.data.response);
       dispatch({
         type: GET_ALL_POST,
         payload: response.data.response,
+        // payload: [],
       });
     })
     .catch((error) => {

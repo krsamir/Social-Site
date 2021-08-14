@@ -8,10 +8,14 @@ import Image from "react-bootstrap/Image";
 import ThumbUpAltOutlinedIcon from "@material-ui/icons/ThumbUpAltOutlined";
 import ModeCommentOutlinedIcon from "@material-ui/icons/ModeCommentOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from "@material-ui/core";
 import axios from "axios";
-const Feed = ({ data }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+import { connect } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
+import { successToast, warningToast } from "../../Redux/Actions/ToastAction";
+const Feed = (props) => {
+  const { data } = props;
+  const [anchorEl, setAnchorEl] = useState(null);
   const [noOfLikes, setNoOfLikes] = useState(0);
   const [likeState, setLikeState] = useState(data);
   useEffect(() => {
@@ -55,6 +59,23 @@ const Feed = ({ data }) => {
         .catch((e) => {
           console.log(e);
         });
+    };
+    // props.successToast("hello");
+    const handleDelete = (userID) => {
+      console.log(userID);
+      axios
+        .delete(`/api/deleteFeed/${userID}`)
+        .then((res) => {
+          if (res.data.status === "deleted") {
+            props.successToast("Post Deleted Successfuly !!");
+          } else {
+            props.warningToast("Some issue while deleting the post !!");
+          }
+        })
+        .catch((e) => {
+          console.log("🚀 ~ file: Feed.jsx ~ line 72 ~ handleDelete ~ e", e);
+        });
+      handleClose();
     };
     const { media } = data;
     return (
@@ -195,8 +216,12 @@ const Feed = ({ data }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
-            <MenuItem onClick={handleClose}>Report</MenuItem>
+            {data.parent && (
+              <MenuItem onClick={() => handleDelete(data.post_id)}>
+                Delete
+              </MenuItem>
+            )}
+            {!data.parent && <MenuItem onClick={handleClose}>Report</MenuItem>}
           </Menu>
         </div>
       </div>
@@ -206,6 +231,7 @@ const Feed = ({ data }) => {
   }
 };
 
-export default Feed;
-// DELETED
-// INSERTED
+export default connect(null, {
+  successToast,
+  warningToast,
+})(Feed);

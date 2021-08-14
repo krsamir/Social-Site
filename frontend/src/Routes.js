@@ -12,6 +12,7 @@ function Routes() {
       <Router>
         <Switch>
           <ProtectedRoute path="/" exact component={Home} />
+          <ProtectedRoute path="/account/:profile" component={Home} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
           <Route path="/validate" exact component={Validate} />
