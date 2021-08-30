@@ -114,8 +114,8 @@ Task.particularPost = (data, result) => {
 };
 
 Task.deleteFeed = (req, result) => {
-  const { userID } = req.params;
-  const deleteQuery = `DELETE FROM social__post WHERE post_id = ${userID}`;
+  const { postID } = req.params;
+  const deleteQuery = `DELETE FROM social__post WHERE post_id = ${postID}`;
   SQL.query(deleteQuery, (err, res) => {
     if (err) {
       console.log(err);

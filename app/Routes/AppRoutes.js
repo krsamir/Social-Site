@@ -8,7 +8,7 @@ const appRoutes = (app) => {
   app.route("/api/search").get(auth, AppController.search);
   app.route("/api/like/:post_id").get(auth, AppController.likepost);
   app.route("/api/single").post(auth, AppController.particularPost);
-  app.route("/api/deleteFeed/:userID").delete(auth, AppController.deleteFeed);
+  app.route("/api/deleteFeed/:postID").delete(auth, AppController.deleteFeed);
 };
 
 export default appRoutes;
