@@ -12,6 +12,7 @@ import { Menu, MenuItem } from "@material-ui/core";
 import axios from "axios";
 import { connect } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
+import { successToast, warningToast } from "../../Redux/Actions/ToastAction";
 import { deletePost } from "../../Redux/Actions/FeedAction";
 const Feed = (props) => {
   const { data } = props;
@@ -62,6 +63,28 @@ const Feed = (props) => {
     };
     const handleDelete = (userID) => {
       props.deletePost(userID);
+      handleClose();
+    };
+
+    const handleReport = async (data) => {
+      const { post_id, reportedByCurrentUser } = data;
+      console.log(post_id);
+      console.log(reportedByCurrentUser);
+      if (reportedByCurrentUser !== 0) {
+        props.warningToast(
+          "you have already reported this post. It will be reviewed by the admin."
+        );
+      } else {
+        props.successToast("Post reported Succesfully!");
+        await axios
+          .post(`/api/report`, { post_id })
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
       handleClose();
     };
     const { media } = data;
@@ -208,7 +231,9 @@ const Feed = (props) => {
                 Delete
               </MenuItem>
             )}
-            {!data.parent && <MenuItem onClick={handleClose}>Report</MenuItem>}
+            {!data.parent && (
+              <MenuItem onClick={() => handleReport(data)}>Report</MenuItem>
+            )}
           </Menu>
         </div>
       </div>
@@ -219,5 +244,7 @@ const Feed = (props) => {
 };
 
 export default connect(null, {
+  successToast,
+  warningToast,
   deletePost,
 })(Feed);

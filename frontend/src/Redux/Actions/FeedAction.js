@@ -92,6 +92,8 @@ export const uploadMedia = (value, images) => async (dispatch) => {
     newArray.text = value;
     newArray.likedByCurrentUser = 0;
     newArray.totalLikes = 0;
+    newArray.reportedByCurrentUser = 0;
+    newArray.totalReports = 0;
     // For dev
     if (data.postId) {
       const file = [];
