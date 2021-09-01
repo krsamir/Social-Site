@@ -6,6 +6,7 @@ import {
   ADD_NEW_POST,
   DELETE_POST,
   WARNING_TOAST,
+  REPORT_POST,
 } from "./types";
 import axios from "axios";
 export const UploadImages = (data) => async (dispatch) => {
@@ -155,6 +156,33 @@ export const deletePost = (userID) => async (dispatch) => {
         dispatch({
           type: DELETE_POST,
           payload: userID,
+        });
+      } else {
+        dispatch({
+          type: WARNING_TOAST,
+          payload: "Some Issue While Deleting!! 😄😃 ",
+        });
+      }
+    })
+    .catch((e) => {
+      removeTokens();
+      console.log("🚀 ~ file: Feed.jsx ~ line 72 ~ handleDelete ~ e", e);
+    });
+};
+
+export const reportPost = (post_id) => async (dispatch) => {
+  await axios
+    .delete(`/api/report/${post_id}`)
+    .then((res) => {
+      if (res.data.status === "reported") {
+        dispatch({
+          type: SUCCESS_TOAST,
+          payload: "Post Reported Successfuly!! 😄😃 ",
+        });
+        // On success report, mark the particular object from array as reported
+        dispatch({
+          type: REPORT_POST,
+          payload: post_id,
         });
       } else {
         dispatch({

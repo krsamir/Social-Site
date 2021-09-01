@@ -126,4 +126,17 @@ Task.deleteFeed = (req, result) => {
   });
 };
 
+Task.reportFeed = (req, result) => {
+  const { postID } = req.params;
+  const reportQuery = `INSERT INTO social__reports (post_id, user_id) VALUES ('${postID}', '${req.id}');
+  `;
+  SQL.query(reportQuery, (err, res) => {
+    if (err) {
+      console.log(err);
+      result(null, err);
+    } else {
+      result({ status: "reported" });
+    }
+  });
+};
 export default Task;

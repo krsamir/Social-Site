@@ -68,4 +68,13 @@ Task.deleteFeed = (req, res) => {
   });
 };
 
+Task.reportFeed = (req, res) => {
+  AppModel.reportFeed(req, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(response);
+    }
+  });
+};
 export default Task;

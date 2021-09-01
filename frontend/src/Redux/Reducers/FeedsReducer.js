@@ -4,6 +4,7 @@ import {
   UPLOAD_IMAGES,
   ADD_NEW_POST,
   DELETE_POST,
+  REPORT_POST,
 } from "../Actions/types";
 
 const initialState = {
@@ -46,6 +47,21 @@ const message = (state = initialState, action) => {
         ...state,
         allPost: [...dataArray],
       };
+
+    case REPORT_POST:
+      const dataForReport = { ...state };
+      const reportData = dataForReport.allPost;
+      const reportIndex = reportData
+        .map((val) => val.post_id)
+        .indexOf(action.payload);
+      reportData[reportIndex].reportedByCurrentUser = 1;
+      reportData[reportIndex].totalReports += 1;
+      console.log(reportData);
+      return {
+        ...state,
+        allPost: [...reportData],
+      };
+
     default:
       return state;
   }
